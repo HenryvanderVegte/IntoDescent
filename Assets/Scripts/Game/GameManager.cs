@@ -65,8 +65,8 @@ public class GameManager : MonoBehaviour {
 
         }
 
-        _name += "(Game)";
-        _overlord.name = _name;
+        _name += "(Overlord)";
+        _overlord.SetName(_name);
         overlord = _overlord;
         registeredPlayers++;
         if (registeredPlayers == connectedPlayers)
@@ -89,8 +89,8 @@ public class GameManager : MonoBehaviour {
             }
             
         }
-        _name += "(Game)";
-        _player.name = _name;
+        _name += "(Player)";
+        _player.SetName(_name);
         players.Add(_player);
 
         //Different Start Positions
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour {
         return false;
     }
 
-    //Called every time a Player ends his Turn to check if all players did their Turn
+    //Called every time a player ends his turn to check if all players did their turn
     //If every Player did his turn, the Overlord can start his turn
     public static void PlayerEndTurn()
     {
@@ -140,6 +140,11 @@ public class GameManager : MonoBehaviour {
             }
         }
 
+    }
+
+    public static void OverlordEndTurn()
+    {
+        StartNewTurn();
     }
 
     public static void StartNewTurn()

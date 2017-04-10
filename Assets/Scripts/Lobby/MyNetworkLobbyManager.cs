@@ -29,12 +29,13 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
                     {
                         connectedLobbyPlayers++;
                     }
+
                 }
 
                 Destroy(GetComponent<NetworkGUIManager>());
 
                 gameStarted = true;
-
+               
                 base.OnLobbyServerPlayersReady();
             }
         }
@@ -94,4 +95,5 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         base.OnServerAddPlayer(conn, playerControllerId);
 
     }
+
 }

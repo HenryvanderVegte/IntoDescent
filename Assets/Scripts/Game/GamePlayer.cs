@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Runtime.InteropServices;
 
 [RequireComponent(typeof(GamePlayerSetup))]
 public class GamePlayer : NetworkBehaviour {
@@ -12,6 +13,12 @@ public class GamePlayer : NetworkBehaviour {
 
     [SyncVar] 
     public int playerID = -1;
+
+    [DllImport("user32.dll", EntryPoint = "SetWindowText")]
+    public static extern bool SetWindowText(System.IntPtr hwnd, System.String lpString);
+
+    [DllImport("user32.dll", EntryPoint = "FindWindow")]
+    public static extern System.IntPtr FindWindow(System.String className, System.String windowName);
 
     GamePlayerSetup gamePlayerSetup;
     GamePlayerGUIManager gamePlayerGUIManager;
@@ -29,7 +36,8 @@ public class GamePlayer : NetworkBehaviour {
         {
             gamePlayerGUIManager = GetComponent<GamePlayerGUIManager>();
             gamePlayerMovement = GetComponent<GamePlayerMovement>();
-           
+            //Set player names
+
         }
     }
 
@@ -39,6 +47,18 @@ public class GamePlayer : NetworkBehaviour {
         hasPlayedThisRound = false;
         gamePlayerGameStatusGUIManager.ResetHasPlayedImage();
     }
+
+    public void SetName(string _name)
+    {
+        this.name = _name;
+        if (isLocalPlayer)
+        {
+            System.IntPtr windowPtr = FindWindow(null, "DungeonCrawler");
+            SetWindowText(windowPtr, _name);
+        }
+    }
+
+
 
     //Can only be called from local player--
     public void SetActive()
@@ -107,6 +127,8 @@ public class GamePlayer : NetworkBehaviour {
     {
             //UPDATE GUI
     }
+
+
 
     #region groundUpdate
     // Removes the Player state of a ground position and changes it to 0 (Free)
