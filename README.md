@@ -1,2 +1,2 @@
 # IntoDescent
-An early implementation for a turn-based board game
+Implementation of a turn-based board game
